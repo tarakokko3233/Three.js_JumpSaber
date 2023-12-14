@@ -14,13 +14,17 @@
     }
 
     .game-container {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start; /* 左端に寄せる */
+        clear: both;
+    }
+
+    .right-container {
+        float: left;
+        width: calc(100% - [myCanvasの幅]); /* myCanvasの幅を引いた残りの幅 */
+        max-width: 600px; /* 必要に応じて調整 */
     }
 
     #myCanvas {
-        margin-right: 20px; /* キャンバスと指示の間の余白 */
+        float: left;
     }
 
     #gameStartButton {
@@ -43,12 +47,25 @@
         height: 40px;
     }
 
+    #counters {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #f0f0f0; /* 背景色 */
+        padding: 10px; /* 内側の余白 */
+        border-radius: 10px; /* 角の丸み */
+        font-family: Arial, sans-serif; /* フォント */
+    }
+    .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
     #instructions {
-        flex: 1; /* フレックスアイテムとしての挙動を調整 */
-        max-width: none; /* 最大幅の制限を解除 */
-        width: 100%; /* 幅を親要素の幅に合わせる */
+        margin-top: 20px;
+        float: left;
         max-width: 600px; /* 最大幅を設定 */
-        margin: 20px 0 20px 20px; /* 上、右、下、左の余白 */
+        margin: 20px 0; /* 上、下の余白 */
         padding: 20px; /* 内側の余白 */
         box-sizing: border-box; /* パディングを含むボックスモデル */
         border-radius: 10px; /* 角の丸み */
@@ -57,25 +74,19 @@
         font-size: 1.2em; /* フォントサイズ */
     }
 
-    #counters {
-        position: absolute; /* 絶対位置指定 */
-        top: 80px; /* 上端からの距離 */
-        right: 20px; /* 右端からの距離 */
-        background-color: #f0f0f0; /* 背景色 */
-        padding: 10px; /* 内側の余白 */
-        border-radius: 10px; /* 角の丸み */
-        font-family: Arial, sans-serif; /* フォント */
-    }
   </style>
 </head>
 <body>
-  <div id="overlay-red" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
-  <div id="overlay-blue" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
-  <canvas id="myCanvas"></canvas>
-  <button id="gameStartButton">Gamestart</button>
-  <br>
-  <div class="game-container">
-    <div id="instructions">
+    <div id="overlay-red" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
+    <div id="overlay-blue" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
+    <canvas id="myCanvas"></canvas>
+<div class="right-container">
+    <div class="game-container">
+        <div id="counters">
+            <p>Points: <span id="pointsCount">0</span></p>
+            <p>Damage: <span id="damageCount">0</span></p>
+        </div>
+        <div id="instructions">
         <h2>キューブを避けつつ棒を振ってキューブを斬ろう！</h2>
         <h3 style="color: #333;">操作方法</h3>
         <ul>
@@ -87,11 +98,11 @@
             <li>Enterで棒を振る</li>
         </ul>
     </div>
-  </div>
-  <div id="counters">
-    <p>Points: <span id="pointsCount">0</span></p>
-    <p>Damage: <span id="damageCount">0</span></p>
-  </div>
+</div>
+</div>
+    <button id="gameStartButton">Gamestart</button>
+
+
   <script>
     // ボタン要素を取得
     const button = document.getElementById('gameStartButton');
