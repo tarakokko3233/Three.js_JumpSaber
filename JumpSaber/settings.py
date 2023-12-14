@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ls*cbuy0y&xh%zp+uc^a(my@6qk1bwyrp9eta^#jwujr3e)jy(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['JumpSaber.onrender.com',
+ALLOWED_HOSTS = ['jumpsaber.onrender.com',
                 '127.0.0.1',
                 'localhost']
 
