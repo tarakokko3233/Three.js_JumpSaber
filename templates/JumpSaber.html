@@ -6,8 +6,6 @@
   <!-- three.jsを読み込む -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
   <style>
-
-
     .game-container {
         clear: both;
     }
@@ -16,15 +14,20 @@
     position: relative; /* 相対位置指定 */
     float: left;
     z-index: 10; /* 前面に表示 */
-}
+    }
+
+    #overlay-red {
+        z-index: 20;
+    }
+    #overlay-blue {
+        z-index: 20;
+    }
 
 
     #gameStartButton {
-        position: absolute; /* 絶対位置指定 */
         top: 20px; /* 上端からの距離 */
         left: 20px; /* 左端からの距離 */
         background-color: #4F5AE3;
-        box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.25);
         border-radius: 9px;
         border: 2px solid rgba(42.04, 8.88, 245.78, 0.73);
         color: white;
@@ -93,9 +96,6 @@
 </div>
 </div>
     <button id="gameStartButton">Gamestart</button>
-    <button id="fullscreenButton">フルスクリーンにする</button>
-
-
 
   <script>
     // ボタン要素を取得
@@ -119,7 +119,7 @@
     button.addEventListener("mouseup", function () {
       button.style.backgroundColor = "#00008b";
     });
-    document.getElementById("fullscreenButton").addEventListener("click", function() {
+    document.getElementById("gameStartButton").addEventListener("click", function() {
     if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
     } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
@@ -128,6 +128,16 @@
         document.documentElement.webkitRequestFullscreen();
     } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
         document.documentElement.msRequestFullscreen();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var startButton = document.getElementById('gameStartButton');
+    if (startButton) {
+        startButton.addEventListener('click', function() {
+            init(); // ゲーム開始関数
+            this.style.display = 'none'; // ボタンを隠す
+        });
     }
 });
 

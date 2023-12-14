@@ -1,138 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>JumpSaber</title>
-  <meta charset="UTF-8" />
-  <!-- three.jsを読み込む -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
-  <!-- index.jsを読み込む -->
+
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>JumpSaber</title>
+    <meta charset="UTF-8" />
+    <!-- three.jsを読み込む -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
+      <!-- index.jsを読み込む -->
   <script src="kadai15.js"></script>
-  <style>
+    <style>
+      .game-container {
+          clear: both;
+      }
+
+      #myCanvas {
+      position: relative; /* 相対位置指定 */
+      float: left;
+      z-index: 10; /* 前面に表示 */
+      }
+
+      #overlay-red {
+          z-index: 20;
+      }
+      #overlay-blue {
+          z-index: 20;
+      }
 
 
-    .game-container {
-        clear: both;
-    }
+      #gameStartButton {
+          top: 20px; /* 上端からの距離 */
+          left: 20px; /* 左端からの距離 */
+          background-color: #4F5AE3;
+          border-radius: 9px;
+          border: 2px solid rgba(42.04, 8.88, 245.78, 0.73);
+          color: white;
+          font-size: 1.5vw;
+          font-family: Roboto;
+          font-weight: 400;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30%;
+          height: 40px;
+      }
 
-    #myCanvas {
-    position: relative; /* 相対位置指定 */
-    float: left;
-    z-index: 10; /* 前面に表示 */
-}
+      #counters {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: #f0f0f0; /* 背景色 */
+          padding: 10px; /* 内側の余白 */
+          border-radius: 10px; /* 角の丸み */
+          font-family: Arial, sans-serif; /* フォント */
+      }
 
-
-    #gameStartButton {
-        position: absolute; /* 絶対位置指定 */
-        top: 20px; /* 上端からの距離 */
-        left: 20px; /* 左端からの距離 */
-        background-color: #4F5AE3;
-        box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.25);
-        border-radius: 9px;
-        border: 2px solid rgba(42.04, 8.88, 245.78, 0.73);
-        color: white;
-        font-size: 1.5vw;
-        font-family: Roboto;
-        font-weight: 400;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30%;
-        height: 40px;
-    }
-
-    #counters {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: #f0f0f0; /* 背景色 */
-        padding: 10px; /* 内側の余白 */
-        border-radius: 10px; /* 角の丸み */
-        font-family: Arial, sans-serif; /* フォント */
-    }
-
-    #instructions {
-    position: absolute; /* 絶対位置指定 */
-    top: 100px; /* 上端からの距離 */
-    right: 0;
-    max-width: 600px; /* 最大幅を設定 */
-    margin: 20px 0; /* 上、下の余白 */
-    padding: 20px; /* 内側の余白 */
-    box-sizing: border-box; /* パディングを含むボックスモデル */
-    border-radius: 10px; /* 角の丸み */
-    background-color: #f0f0f0; /* 背景色 */
-    font-family: Arial, sans-serif; /* フォント */
-    font-size: 1.2em; /* フォントサイズ */
-}
+      #instructions {
+      position: absolute; /* 絶対位置指定 */
+      top: 100px; /* 上端からの距離 */
+      right: 0;
+      max-width: 600px; /* 最大幅を設定 */
+      margin: 20px 0; /* 上、下の余白 */
+      padding: 20px; /* 内側の余白 */
+      box-sizing: border-box; /* パディングを含むボックスモデル */
+      border-radius: 10px; /* 角の丸み */
+      background-color: #f0f0f0; /* 背景色 */
+      font-family: Arial, sans-serif; /* フォント */
+      font-size: 1.2em; /* フォントサイズ */
+  }
 
 
-  </style>
-</head>
-<body>
-    <div id='overlay-red' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
-    <div id='overlay-blue' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
-    <canvas id="myCanvas"></canvas>
-<div class="right-container">
-    <div class="game-container">
-        <div id="counters">
-            <p>Points: <span id="pointsCount">0</span></p>
-            <p>Damage: <span id="damageCount">0</span></p>
-        </div>
-        <div id="instructions">
-        <h2>JumpSaber</h2>
-        <h3>〜キューブを避けて棒を振ってキューブを斬ろう！〜<br>画面の最大化を推奨</h3>
-        <h3 style="color: #333;">操作方法</h3>
-        <ul>
-            <li>WASDで操作(Wが前　Sが後　Aが左　Dが右)</li>
-            <li>Zで移動速度UP Xで移動速度DOWN</li>
-            <li>3人称視点ではカーソルでも移動</li>
-            <li>Spaceでジャンプ</li>
-            <li>Qで1人称ー3人称の視点変更</li>
-            <li>Shiftでしゃがむ<br>(しゃがむとジャンプの高さが下がる)</li>
-            <li>Enterで棒を振る</li>
-        </ul>
-    </div>
-</div>
-</div>
-    <button id="gameStartButton">Gamestart</button>
-    <button id="fullscreenButton">フルスクリーンにする</button>
+    </style>
+  </head>
+  <body>
+      <div id='overlay-red' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
+      <div id='overlay-blue' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
+      <canvas id="myCanvas"></canvas>
+  <div class="right-container">
+      <div class="game-container">
+          <div id="counters">
+              <p>Points: <span id="pointsCount">0</span></p>
+              <p>Damage: <span id="damageCount">0</span></p>
+          </div>
+          <div id="instructions">
+          <h2>JumpSaber</h2>
+          <h3>〜キューブを避けて棒を振ってキューブを斬ろう！〜<br>画面の最大化を推奨</h3>
+          <h3 style="color: #333;">操作方法</h3>
+          <ul>
+              <li>WASDで操作(Wが前　Sが後　Aが左　Dが右)</li>
+              <li>Zで移動速度UP Xで移動速度DOWN</li>
+              <li>3人称視点ではカーソルでも移動</li>
+              <li>Spaceでジャンプ</li>
+              <li>Qで1人称ー3人称の視点変更</li>
+              <li>Shiftでしゃがむ<br>(しゃがむとジャンプの高さが下がる)</li>
+              <li>Enterで棒を振る</li>
+          </ul>
+      </div>
+  </div>
+  </div>
+      <button id="gameStartButton">Gamestart</button>
 
+    <script>
+      // ボタン要素を取得
+      const button = document.getElementById('gameStartButton');
 
+      // マウスがボタンの上に乗ったときの処理
+      button.addEventListener("mouseover", function () {
+        button.style.backgroundColor = "#00008b";
+      });
 
-  <script>
-    // ボタン要素を取得
-    const button = document.getElementById('gameStartButton');
+      // マウスがボタンの上から離れたときの処理
+      button.addEventListener("mouseout", function () {
+        button.style.backgroundColor = "#4F5AE3";
+      });
 
-    // マウスがボタンの上に乗ったときの処理
-    button.addEventListener("mouseover", function () {
-      button.style.backgroundColor = "#00008b";
-    });
+      // ボタンがクリックされたときの処理
+      button.addEventListener("mousedown", function () {
+        button.style.backgroundColor = "#4F5AE3";
+      });
 
-    // マウスがボタンの上から離れたときの処理
-    button.addEventListener("mouseout", function () {
-      button.style.backgroundColor = "#4F5AE3";
-    });
-
-    // ボタンがクリックされたときの処理
-    button.addEventListener("mousedown", function () {
-      button.style.backgroundColor = "#4F5AE3";
-    });
-
-    button.addEventListener("mouseup", function () {
-      button.style.backgroundColor = "#00008b";
-    });
-    document.getElementById("fullscreenButton").addEventListener("click", function() {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
-        document.documentElement.mozRequestFullScreen();
-    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-        document.documentElement.webkitRequestFullscreen();
-    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
-        document.documentElement.msRequestFullscreen();
-    }
-});
-
-  </script>
-</body>
-</html>
+      button.addEventListener("mouseup", function () {
+        button.style.backgroundColor = "#00008b";
+      });
+      document.getElementById("gameStartButton").addEventListener("click", function() {
+      if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+          document.documentElement.mozRequestFullScreen();
+      } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+          document.documentElement.webkitRequestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+          document.documentElement.msRequestFullscreen();
+      }
+  });
+    </script>
+  </body>
+  </html>
