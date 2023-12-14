@@ -1,5 +1,5 @@
 """
-ASGI config for anshibagundan project.
+ASGI config for JumpSaber project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
