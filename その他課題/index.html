@@ -7,25 +7,18 @@
   <!-- index.jsを読み込む -->
   <script src="kadai15.js"></script>
   <style>
-    body {
-        position: relative;
-        margin: 0;
-        padding: 0;
-    }
+
 
     .game-container {
         clear: both;
     }
 
-    .right-container {
-        float: left;
-        width: calc(100% - [myCanvasの幅]); /* myCanvasの幅を引いた残りの幅 */
-        max-width: 600px; /* 必要に応じて調整 */
-    }
-
     #myCanvas {
-        float: left;
-    }
+    position: relative; /* 相対位置指定 */
+    float: left;
+    z-index: 10; /* 前面に表示 */
+}
+
 
     #gameStartButton {
         position: absolute; /* 絶対位置指定 */
@@ -56,29 +49,27 @@
         border-radius: 10px; /* 角の丸み */
         font-family: Arial, sans-serif; /* フォント */
     }
-    .clearfix::after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+
     #instructions {
-        margin-top: 20px;
-        float: left;
-        max-width: 600px; /* 最大幅を設定 */
-        margin: 20px 0; /* 上、下の余白 */
-        padding: 20px; /* 内側の余白 */
-        box-sizing: border-box; /* パディングを含むボックスモデル */
-        border-radius: 10px; /* 角の丸み */
-        background-color: #f0f0f0; /* 背景色 */
-        font-family: Arial, sans-serif; /* フォント */
-        font-size: 1.2em; /* フォントサイズ */
-    }
+    position: absolute; /* 絶対位置指定 */
+    top: 100px; /* 上端からの距離 */
+    right: 0;
+    max-width: 600px; /* 最大幅を設定 */
+    margin: 20px 0; /* 上、下の余白 */
+    padding: 20px; /* 内側の余白 */
+    box-sizing: border-box; /* パディングを含むボックスモデル */
+    border-radius: 10px; /* 角の丸み */
+    background-color: #f0f0f0; /* 背景色 */
+    font-family: Arial, sans-serif; /* フォント */
+    font-size: 1.2em; /* フォントサイズ */
+}
+
 
   </style>
 </head>
 <body>
-    <div id="overlay-red" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
-    <div id="overlay-blue" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
+    <div id='overlay-red' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
+    <div id='overlay-blue' style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
     <canvas id="myCanvas"></canvas>
 <div class="right-container">
     <div class="game-container">
