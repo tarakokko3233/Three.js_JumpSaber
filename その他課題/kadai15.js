@@ -30,8 +30,8 @@ let damageCount = 0;
 
 
 function init() {
-    const width = 500;
-    const height = 500;
+    const width = 800;
+    const height = 800;
 
     // レンダラーを作成
     const renderer = new THREE.WebGLRenderer({

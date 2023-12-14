@@ -79,7 +79,7 @@
         </div>
         <div id="instructions">
         <h2>JumpSaber</h2>
-        <h3>〜キューブを避けて棒を振ってキューブを斬ろう！〜</h3>
+        <h3>〜キューブを避けて棒を振ってキューブを斬ろう！〜<br>画面の最大化を推奨</h3>
         <h3 style="color: #333;">操作方法</h3>
         <ul>
             <li>WASDで操作(Wが前　Sが後　Aが左　Dが右)</li>
@@ -94,6 +94,8 @@
 </div>
 </div>
     <button id="gameStartButton">Gamestart</button>
+    <button id="fullscreenButton">フルスクリーンにする</button>
+
 
 
   <script>
@@ -118,17 +120,17 @@
     button.addEventListener("mouseup", function () {
       button.style.backgroundColor = "#00008b";
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var startButton = document.getElementById('gameStartButton');
-        if (startButton) {
-            startButton.addEventListener('click', function() {
-                init(); // ゲーム開始関数
-                this.style.display = 'none'; // ボタンを隠す
-            });
-        }
-    });
-
+    document.getElementById("fullscreenButton").addEventListener("click", function() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+        document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+        document.documentElement.msRequestFullscreen();
+    }
+});
 
     let walkSpeed = 0.5;
     let walkCycle = 0;
@@ -151,8 +153,8 @@
 
 
     function init() {
-        const width = 500;
-        const height = 500;
+        const width = 800;
+        const height = 800;
 
         // レンダラーを作成
         const renderer = new THREE.WebGLRenderer({
