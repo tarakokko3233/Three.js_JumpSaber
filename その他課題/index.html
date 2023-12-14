@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <!-- three.jsを読み込む -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/101/three.min.js"></script>
+  <!-- index.jsを読み込む -->
+  <script src="kadai15.js"></script>
+  <style>
+    body {
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
+    .game-container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start; /* 左端に寄せる */
+    }
+
+    #myCanvas {
+        margin-right: 20px; /* キャンバスと指示の間の余白 */
+    }
+
+    #gameStartButton {
+        position: absolute; /* 絶対位置指定 */
+        top: 20px; /* 上端からの距離 */
+        left: 20px; /* 左端からの距離 */
+        background-color: #4F5AE3;
+        box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.25);
+        border-radius: 9px;
+        border: 2px solid rgba(42.04, 8.88, 245.78, 0.73);
+        color: white;
+        font-size: 1.5vw;
+        font-family: Roboto;
+        font-weight: 400;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+        height: 40px;
+    }
+
+    #instructions {
+        flex: 1; /* フレックスアイテムとしての挙動を調整 */
+        max-width: none; /* 最大幅の制限を解除 */
+        width: 100%; /* 幅を親要素の幅に合わせる */
+        max-width: 600px; /* 最大幅を設定 */
+        margin: 20px 0 20px 20px; /* 上、右、下、左の余白 */
+        padding: 20px; /* 内側の余白 */
+        box-sizing: border-box; /* パディングを含むボックスモデル */
+        border-radius: 10px; /* 角の丸み */
+        background-color: #f0f0f0; /* 背景色 */
+        font-family: Arial, sans-serif; /* フォント */
+        font-size: 1.2em; /* フォントサイズ */
+    }
+
+    #counters {
+        position: absolute; /* 絶対位置指定 */
+        top: 80px; /* 上端からの距離 */
+        right: 20px; /* 右端からの距離 */
+        background-color: #f0f0f0; /* 背景色 */
+        padding: 10px; /* 内側の余白 */
+        border-radius: 10px; /* 角の丸み */
+        font-family: Arial, sans-serif; /* フォント */
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay-red" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.5);"></div>
+  <div id="overlay-blue" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 255, 0.5);"></div>
+  <canvas id="myCanvas"></canvas>
+  <button id="gameStartButton">Gamestart</button>
+  <br>
+  <div class="game-container">
+    <div id="instructions">
+        <h2>キューブを避けつつ棒を振ってキューブを斬ろう！</h2>
+        <h3 style="color: #333;">操作方法</h3>
+        <ul>
+            <li>WASDで操作(Wが前　Sが後　Aが左　Dが右)</li>
+            <li>3人称視点ではマウスカーソルで移動</li>
+            <li>Spaceでジャンプ</li>
+            <li>Qで1人称ー3人称の視点変更</li>
+            <li>Shiftでしゃがむ</li>
+            <li>Enterで棒を振る</li>
+        </ul>
+    </div>
+  </div>
+  <div id="counters">
+    <p>Points: <span id="pointsCount">0</span></p>
+    <p>Damage: <span id="damageCount">0</span></p>
+  </div>
+  <script>
+    // ボタン要素を取得
+    const button = document.getElementById('gameStartButton');
+
+    // マウスがボタンの上に乗ったときの処理
+    button.addEventListener("mouseover", function () {
+      button.style.backgroundColor = "#00008b";
+    });
+
+    // マウスがボタンの上から離れたときの処理
+    button.addEventListener("mouseout", function () {
+      button.style.backgroundColor = "#4F5AE3";
+    });
+
+    // ボタンがクリックされたときの処理
+    button.addEventListener("mousedown", function () {
+      button.style.backgroundColor = "#4F5AE3";
+    });
+
+    button.addEventListener("mouseup", function () {
+      button.style.backgroundColor = "#00008b";
+    });
+  </script>
+</body>
+</html>
