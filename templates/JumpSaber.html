@@ -43,19 +43,7 @@
         height: 40px;
     }
 
-    #instructions {
-        flex: 1; /* フレックスアイテムとしての挙動を調整 */
-        max-width: none; /* 最大幅の制限を解除 */
-        width: 100%; /* 幅を親要素の幅に合わせる */
-        max-width: 600px; /* 最大幅を設定 */
-        margin: 20px 0 20px 20px; /* 上、右、下、左の余白 */
-        padding: 20px; /* 内側の余白 */
-        box-sizing: border-box; /* パディングを含むボックスモデル */
-        border-radius: 10px; /* 角の丸み */
-        background-color: #f0f0f0; /* 背景色 */
-        font-family: Arial, sans-serif; /* フォント */
-        font-size: 1.2em; /* フォントサイズ */
-    }
+
 
     #counters {
         position: absolute; /* 絶対位置指定 */
@@ -66,6 +54,22 @@
         border-radius: 10px; /* 角の丸み */
         font-family: Arial, sans-serif; /* フォント */
     }
+    #instructions {
+        margin-top: 20px;
+        flex: 1; /* フレックスアイテムとしての挙動を調整 */
+        max-width: none; /* 最大幅の制限を解除 */
+        width: 100%; /* 幅を親要素の幅に合わせる */
+        max-width: 600px; /* 最大幅を設定 */
+        margin: 20px 0 20px 20px; /* 上、右、下、左の余白 */
+
+        padding: 20px; /* 内側の余白 */
+        box-sizing: border-box; /* パディングを含むボックスモデル */
+        border-radius: 10px; /* 角の丸み */
+        background-color: #f0f0f0; /* 背景色 */
+        font-family: Arial, sans-serif; /* フォント */
+        font-size: 1.2em; /* フォントサイズ */
+    }
+
   </style>
 </head>
 <body>
@@ -74,6 +78,10 @@
   <canvas id="myCanvas"></canvas>
   <button id="gameStartButton">Gamestart</button>
   <br>
+  <div id="counters">
+    <p>Points: <span id="pointsCount">0</span></p>
+    <p>Damage: <span id="damageCount">0</span></p>
+  </div>
   <div class="game-container">
     <div id="instructions">
         <h2>キューブを避けつつ棒を振ってキューブを斬ろう！</h2>
@@ -88,10 +96,7 @@
         </ul>
     </div>
   </div>
-  <div id="counters">
-    <p>Points: <span id="pointsCount">0</span></p>
-    <p>Damage: <span id="damageCount">0</span></p>
-  </div>
+
   <script>
     // ボタン要素を取得
     const button = document.getElementById('gameStartButton');
