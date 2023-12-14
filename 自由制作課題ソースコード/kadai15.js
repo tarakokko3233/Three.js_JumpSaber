@@ -241,24 +241,28 @@ function init() {
             // カメラがロボットを追従していない場合のみ、ロボットの移動を許可
             if (keyCode == 87) { // 'W' キー
                 if(robot.position.z > -50){
+                    movefloat = true;
                 robot.position.z -= walkSpeed*3;
                 animateWalk();
                 }
             }
             if (keyCode == 65) { // 'A' キー
                 if(robot.position.x > -50){
+                    movefloat = true;
                 robot.position.x -= walkSpeed*3;
                 animateWalk();
                 }
             }
             if (keyCode == 83) { // 'S' キー
                 if(robot.position.z < 50){
+                    movefloat = true;
                 robot.position.z += walkSpeed*3;
                 animateWalk();
                 }
             }
             if (keyCode == 68) { // 'D' キー
                 if(robot.position.x < 50){
+                    movefloat = true;
                 robot.position.x += walkSpeed*3;
                 animateWalk();
                 }
